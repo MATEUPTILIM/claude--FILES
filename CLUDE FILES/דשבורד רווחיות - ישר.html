@@ -1,0 +1,359 @@
+<title>רווחיות ישר שירותי קרקע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Assistant:wght@400;600;700&display=swap">
+<style>
+  :root{
+    --ground:#E7EAEE;
+    --surface:#FFFFFF;
+    --surface-2:#F3F5F8;
+    --ink:#0D1620;
+    --ink-2:#3B4956;
+    --ink-3:#6B7987;
+    --rule:#C9D1DA;
+    --rule-strong:#94A3B1;
+    --accent:#0E5A6B;
+    --accent-soft:#D3E4E8;
+    --good:#166534;
+    --good-soft:#D6E8D9;
+    --warn:#8A5A00;
+    --warn-soft:#F3E3C2;
+    --bad:#9B1C1C;
+    --bad-soft:#F4D7D7;
+    --bar:#0E5A6B;
+    --bar-soft:#7FA8B2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0B1219;
+      --surface:#131C25;
+      --surface-2:#1A252F;
+      --ink:#EAF0F5;
+      --ink-2:#B6C3CF;
+      --ink-3:#8697A5;
+      --rule:#2A3946;
+      --rule-strong:#3F5060;
+      --accent:#5FC6D8;
+      --accent-soft:#123842;
+      --good:#7BD495;
+      --good-soft:#123021;
+      --warn:#E8B45C;
+      --warn-soft:#33270F;
+      --bad:#F08A8A;
+      --bad-soft:#3A1717;
+      --bar:#5FC6D8;
+      --bar-soft:#2E6773;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0B1219;
+    --surface:#131C25;
+    --surface-2:#1A252F;
+    --ink:#EAF0F5;
+    --ink-2:#B6C3CF;
+    --ink-3:#8697A5;
+    --rule:#2A3946;
+    --rule-strong:#3F5060;
+    --accent:#5FC6D8;
+    --accent-soft:#123842;
+    --good:#7BD495;
+    --good-soft:#123021;
+    --warn:#E8B45C;
+    --warn-soft:#33270F;
+    --bad:#F08A8A;
+    --bad-soft:#3A1717;
+    --bar:#5FC6D8;
+    --bar-soft:#2E6773;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--ground);color:var(--ink);
+    font-family:"Assistant",-apple-system,Segoe UI,Arial,sans-serif;
+    direction:rtl;font-size:16px;line-height:1.5;
+    font-variant-numeric:tabular-nums;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px}
+
+  header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:6px}
+  h1{
+    font-family:"Frank Ruhl Libre",Georgia,serif;font-weight:900;
+    font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0;letter-spacing:-.01em;
+    text-wrap:balance;
+  }
+  .sub{color:var(--ink-2);font-size:15px;margin:0}
+  .stamp{
+    margin-inline-start:auto;font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:4px 10px;background:var(--surface)
+  }
+
+  h2{
+    font-family:"Frank Ruhl Libre",Georgia,serif;font-weight:700;font-size:20px;
+    margin:38px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--rule-strong);
+  }
+  h2 .note{font-family:"Assistant",sans-serif;font-weight:400;font-size:13px;color:var(--ink-3);margin-inline-start:8px}
+
+  /* ---- month columns ---- */
+  .months{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  .m{background:var(--surface);border:1px solid var(--rule);padding:16px 16px 14px}
+  .m.now{border-color:var(--accent);border-top:4px solid var(--accent)}
+  .m h3{margin:0 0 12px;font-size:15px;font-weight:700;letter-spacing:.04em;color:var(--ink-2)}
+  .m.now h3{color:var(--accent)}
+  .big{font-family:"Frank Ruhl Libre",Georgia,serif;font-weight:700;font-size:30px;line-height:1;margin:0}
+  .big small{font-size:14px;font-weight:400;color:var(--ink-3);font-family:"Assistant",sans-serif}
+  .rowline{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--rule);font-size:14px}
+  .rowline:first-of-type{border-top:none}
+  .rowline dt{color:var(--ink-2);margin:0}
+  .rowline dd{margin:0;font-weight:600}
+  .pend{color:var(--ink-3);font-weight:400;font-style:italic}
+  dl{margin:14px 0 0}
+
+  /* ---- chart ---- */
+  figure{margin:0;background:var(--surface);border:1px solid var(--rule);padding:16px}
+  figcaption{font-size:13px;color:var(--ink-2);margin-top:10px}
+  .two{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .axis{stroke:var(--rule);stroke-width:1}
+  .gl{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
+  .tick{fill:var(--ink-3);font-size:11px;font-family:"Assistant",sans-serif}
+  .vlab{fill:var(--ink);font-size:12px;font-weight:700;font-family:"Assistant",sans-serif}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-bottom:6px}
+  .legend i{display:inline-block;width:11px;height:11px;margin-inline-end:6px;vertical-align:-1px}
+
+  /* ---- client table ---- */
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface)}
+  caption{text-align:right;font-size:13px;color:var(--ink-3);padding:0 0 8px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:right;white-space:nowrap}
+  thead th{
+    font-size:12px;letter-spacing:.05em;color:var(--ink-2);font-weight:700;
+    border-bottom:2px solid var(--rule-strong);background:var(--surface-2)
+  }
+  tbody tr:hover{background:var(--surface-2)}
+  td.name{white-space:normal;font-weight:600}
+  .track{position:relative;min-width:150px;width:190px;height:16px;background:var(--surface-2);border:1px solid var(--rule)}
+  .track span{position:absolute;inset-block:0;inset-inline-end:0;background:var(--bar)}
+  tfoot td{font-weight:700;border-top:2px solid var(--rule-strong);background:var(--surface-2)}
+  .pill{
+    display:inline-block;min-width:62px;text-align:center;padding:2px 8px;font-weight:700;font-size:13px;
+    border:1px solid currentColor;border-radius:999px
+  }
+  .p-good{color:var(--good);background:var(--good-soft)}
+  .p-mid{color:var(--warn);background:var(--warn-soft)}
+  .p-bad{color:var(--bad);background:var(--bad-soft)}
+
+  /* ---- occupancy + debt ---- */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .panel{background:var(--surface);border:1px solid var(--rule);padding:16px}
+  .occ{display:grid;gap:10px;margin:0}
+  .occ .r{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+  .occ .nm{font-weight:600;font-size:14px}
+  .occ .ct{font-size:13px;color:var(--ink-2)}
+  .beds{grid-column:1 / -1;display:flex;gap:3px;flex-wrap:wrap}
+  .bed{width:15px;height:15px;border:1px solid var(--rule-strong);background:var(--surface-2)}
+  .bed.f{background:var(--accent);border-color:var(--accent)}
+  .debt{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:14px}
+  .debt b{font-weight:700}
+  .debt .why{display:block;font-size:12px;color:var(--ink-3);font-weight:400;max-width:38ch}
+  .total{display:flex;justify-content:space-between;padding-top:11px;font-weight:700;font-size:17px}
+
+  .callout{
+    background:var(--surface);border:1px solid var(--rule);border-inline-start:4px solid var(--accent);
+    padding:14px 16px;margin-top:14px;font-size:15px;color:var(--ink-2)
+  }
+  .callout b{color:var(--ink)}
+  footer{margin-top:34px;font-size:13px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:12px}
+  @media (max-width:860px){
+    .months{grid-template-columns:1fr}
+    .two,.cols{grid-template-columns:1fr}
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>רווחיות — ישר שירותי קרקע</h1>
+      <p class="sub">עובדים זרים ודירות · יוני–אוגוסט 2026 · כל הסכומים נטו, ללא מע"מ</p>
+    </div>
+    <span class="stamp">עודכן 06/09/2026</span>
+  </header>
+
+  <section class="months">
+    <article class="m">
+      <h3>יוני 2026</h3>
+      <p class="big">93,694<small> ₪ רווח נקי</small></p>
+      <dl>
+        <div class="rowline"><dt>מכר</dt><dd>707,645</dd></div>
+        <div class="rowline"><dt>רווח גולמי</dt><dd>117,165 · 16.6%</dd></div>
+        <div class="rowline"><dt>רווח דירות</dt><dd>32,365</dd></div>
+        <div class="rowline"><dt>הוצאות תפעוליות</dt><dd>55,835</dd></div>
+      </dl>
+    </article>
+    <article class="m">
+      <h3>יולי 2026</h3>
+      <p class="big">140,398<small> ₪ רווח נקי</small></p>
+      <dl>
+        <div class="rowline"><dt>מכר</dt><dd>971,025</dd></div>
+        <div class="rowline"><dt>רווח גולמי</dt><dd>175,473 · 18.1%</dd></div>
+        <div class="rowline"><dt>רווח דירות</dt><dd>40,370</dd></div>
+        <div class="rowline"><dt>הוצאות תפעוליות</dt><dd>67,120</dd></div>
+      </dl>
+    </article>
+    <article class="m now">
+      <h3>אוגוסט 2026</h3>
+      <p class="big">198,980<small> ₪ רווח גולמי מאוחד</small></p>
+      <dl>
+        <div class="rowline"><dt>מכר</dt><dd>1,046,045</dd></div>
+        <div class="rowline"><dt>רווח גולמי</dt><dd>165,671 · 15.8%</dd></div>
+        <div class="rowline"><dt>רווח דירות</dt><dd>33,310</dd></div>
+        <div class="rowline"><dt>הוצאות תפעוליות</dt><dd class="pend">טרם הוזנו</dd></div>
+      </dl>
+    </article>
+  </section>
+
+  <div class="callout">
+    <b>אוגוסט הוא חודש שיא במכר</b> — 1,046,045 ₪, גבוה ב-7.7% מיולי — אבל הרווח הגולמי ירד ב-9,803 ₪.
+    הסיבה כמעט כולה תמהיל: <b>גרייטדור</b> קפץ מ-13.9% ל-23.4% מהמכר והוא עובד ב-6% רווח, בעוד <b>רמא</b>
+    (20.5% רווח) התכווצה מ-16% ל-10.5%.
+  </div>
+
+  <h2>מגמה חודשית <span class="note">מכר מול רווח גולמי מאוחד, באלפי ₪</span></h2>
+  <div class="two">
+    <figure>
+      <div class="legend">
+        <span><i style="background:var(--bar)"></i>מכר</span>
+        <span><i style="background:var(--bar-soft)"></i>רווח גולמי מאוחד</span>
+      </div>
+      <svg id="trend" viewBox="0 0 560 240" role="img" aria-label="מכר ורווח גולמי מאוחד לפי חודש"></svg>
+    </figure>
+    <figure>
+      <svg id="marg" viewBox="0 0 360 240" role="img" aria-label="שיעור רווח גולמי לפי חודש"></svg>
+      <figcaption>שיעור הרווח הגולמי של העובדים הזרים. הירידה באוגוסט נובעת מתמהיל הלקוחות ולא מהתייקרות התאגידים.</figcaption>
+    </figure>
+  </div>
+
+  <h2>לקוחות — אוגוסט <span class="note">ממוין לפי רווח גולמי</span></h2>
+  <div class="scroll">
+    <table id="clients">
+      <caption>הפס מציג את הרווח הגולמי ביחס ללקוח הרווחי ביותר. שיעור מתחת ל-10% מסומן כחלש.</caption>
+      <thead>
+        <tr><th>לקוח</th><th>מכר (₪)</th><th>רווח גולמי (₪)</th><th></th><th>שיעור</th></tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr><td>סה"כ</td><td>1,046,045</td><td>157,471</td><td></td><td>15.1%</td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <h2>דירות וחובות פתוחים</h2>
+  <div class="cols">
+    <div class="panel">
+      <h3 style="margin:0 0 12px;font-size:15px">תפוסת מיטות — אוגוסט</h3>
+      <div class="occ" id="occ"></div>
+      <p style="font-size:13px;color:var(--ink-2);margin:14px 0 0">
+        10 מיטות ריקות. בבית חנינה השכירות (9,600 ₪) מכסה 12 עובדים גם כשישנים 9 — מילוי 3 המיטות
+        מוסיף 3,540 ₪ הכנסה בעלות אפס.
+      </p>
+    </div>
+    <div class="panel">
+      <h3 style="margin:0 0 12px;font-size:15px">חובות פתוחים</h3>
+      <div class="debt"><span>גרייטדור<span class="why">צ'ק 110,000 בניכיון — 50,000 התקבלו, 60,000 בחודש הבא</span></span><b>106,812</b></div>
+      <div class="debt"><span>דוד בן חמו קבלן<span class="why">חיוב יולי, טרם שולם</span></span><b>21,299</b></div>
+      <div class="debt"><span>מע"מ יוני — NH Clinics<span class="why">חשבון עסקה 40059</span></span><b>1,505</b></div>
+      <div class="total"><span>סה"כ לגבייה</span><span>129,616 ₪</span></div>
+    </div>
+  </div>
+
+  <footer>
+    המקור: <b>עלות מכר ורווח - ישר שירותי קרקע 2026.xlsx</b> · הוצאות תפעוליות ורווח נקי לאוגוסט טרם הוזנו.
+  </footer>
+</div>
+
+<script>
+const clients = [
+  {n:"שלום ברגשטיין", s:243091, p:55392, m:22.8},
+  {n:"רמא", s:109700, p:22492, m:20.5},
+  {n:"גרייטדור", s:244763, p:14716, m:6.0},
+  {n:"ש.ח.נ כרמלי", s:83246, p:13080, m:15.7},
+  {n:"אופיר קבלן", s:94053, p:12405, m:13.2},
+  {n:"אחמד מצודת השלום", s:77539, p:11788, m:15.2},
+  {n:"אליעזר הקר אלומיניום", s:54958, p:11238, m:20.4},
+  {n:"אלי אביאלי", s:36248, p:3902, m:10.8},
+  {n:"מ. רוטנברג", s:34804, p:3720, m:10.7},
+  {n:"אסף תאגיד השידור", s:19635, p:2788, m:14.2},
+  {n:"שי רם חברה לבנייה", s:16093, p:2613, m:16.2},
+  {n:"ארי שבט בנימין", s:21175, p:2364, m:11.2},
+  {n:"מאי מערכות חשמל", s:10742, p:977, m:9.1}
+];
+const nf = n => n.toLocaleString("he-IL");
+const maxP = Math.max(...clients.map(c=>c.p));
+document.querySelector("#clients tbody").innerHTML = clients.map(c=>{
+  const cls = c.m < 10 ? "p-bad" : (c.m < 16 ? "p-mid" : "p-good");
+  const w = Math.max(2, Math.round(c.p / maxP * 100));
+  return `<tr>
+    <td class="name">${c.n}</td>
+    <td>${nf(c.s)}</td>
+    <td>${nf(c.p)}</td>
+    <td><div class="track"><span style="width:${w}%"></span></div></td>
+    <td><span class="pill ${cls}">${c.m.toFixed(1)}%</span></td>
+  </tr>`;
+}).join("");
+
+const beds = [
+  {n:"קארו 7", full:9, cap:15},
+  {n:"בית חנינה (מלון)", full:9, cap:12},
+  {n:"קארו 3", full:4, cap:5},
+  {n:"קארו 11", full:4, cap:4},
+  {n:"קריית גת", full:3, cap:3}
+];
+document.getElementById("occ").innerHTML = beds.map(b=>`
+  <div class="r">
+    <span class="nm">${b.n}</span>
+    <span class="ct">${b.full} מתוך ${b.cap}</span>
+    <span class="beds">${Array.from({length:b.cap},(_,i)=>`<i class="bed ${i<b.full?"f":""}"></i>`).join("")}</span>
+  </div>`).join("");
+
+/* --- grouped bars: revenue vs combined gross profit --- */
+(function(){
+  const data=[{m:"יוני",s:707.6,p:149.5},{m:"יולי",s:971.0,p:215.8},{m:"אוגוסט",s:1046.0,p:199.0}];
+  const W=560,H=240,L=52,R=12,T=16,B=34, iw=W-L-R, ih=H-T-B;
+  const max=1200, y=v=>T+ih-(v/max)*ih;
+  let s=`<line class="axis" x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}"/>`;
+  [0,300,600,900,1200].forEach(t=>{
+    s+=`<line class="gl" x1="${L}" y1="${y(t)}" x2="${W-R}" y2="${y(t)}"/>`;
+    s+=`<text class="tick" x="${W-R+4}" y="${y(t)+4}">${t}</text>`;
+  });
+  const band=iw/data.length, bw=Math.min(54,band/3.1);
+  data.forEach((d,i)=>{
+    const cx=L+band*i+band/2;
+    const x1=cx+4, x2=cx-4-bw;
+    [[x1,d.s,"var(--bar)"],[x2,d.p,"var(--bar-soft)"]].forEach(([x,v,c])=>{
+      const h=(T+ih)-y(v);
+      s+=`<rect x="${x}" y="${y(v)}" width="${bw}" height="${h}" fill="${c}" rx="3"/>`;
+      s+=`<text class="vlab" x="${x+bw/2}" y="${y(v)-6}" text-anchor="middle">${v.toFixed(0)}</text>`;
+    });
+    s+=`<text class="tick" x="${cx}" y="${T+ih+20}" text-anchor="middle" style="font-size:13px">${d.m}</text>`;
+  });
+  document.getElementById("trend").innerHTML=s;
+})();
+
+/* --- margin line --- */
+(function(){
+  const data=[{m:"יוני",v:16.6},{m:"יולי",v:18.1},{m:"אוגוסט",v:15.8}];
+  const W=360,H=240,L=42,R=18,T=26,B=34, iw=W-L-R, ih=H-T-B;
+  const lo=14,hi=20, y=v=>T+ih-((v-lo)/(hi-lo))*ih, x=i=>L+iw*(i/(data.length-1));
+  let s=`<text class="tick" x="${W-R}" y="14" text-anchor="end" style="font-size:12px">שיעור רווח גולמי</text>`;
+  [14,16,18,20].forEach(t=>{
+    s+=`<line class="gl" x1="${L}" y1="${y(t)}" x2="${W-R}" y2="${y(t)}"/>`;
+    s+=`<text class="tick" x="${L-8}" y="${y(t)+4}" text-anchor="end">${t}%</text>`;
+  });
+  s+=`<polyline fill="none" stroke="var(--bar)" stroke-width="2.5" stroke-linejoin="round" points="${data.map((d,i)=>`${x(i)},${y(d.v)}`).join(" ")}"/>`;
+  data.forEach((d,i)=>{
+    s+=`<circle cx="${x(i)}" cy="${y(d.v)}" r="5.5" fill="var(--surface)" stroke="var(--bar)" stroke-width="2.5"/>`;
+    s+=`<text class="vlab" x="${x(i)}" y="${y(d.v)-14}" text-anchor="middle">${d.v}%</text>`;
+    s+=`<text class="tick" x="${x(i)}" y="${T+ih+20}" text-anchor="middle" style="font-size:13px">${d.m}</text>`;
+  });
+  document.getElementById("marg").innerHTML=s;
+})();
+</script>
